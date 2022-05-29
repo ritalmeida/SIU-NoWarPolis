@@ -8,6 +8,8 @@ public class Location implements Serializable {
 
     public String localidade;
 
+    public TypePoI typePoI;
+
     public double getX() {
         return x;
     }
@@ -30,6 +32,21 @@ public class Location implements Serializable {
 
     public void setLocalidade(String localidade) {
         this.localidade = localidade;
+    }
+
+    public TypePoI getTypePoI() {
+        return typePoI;
+    }
+
+    public void setTypePoI(TypePoI typePoI) {
+        this.typePoI = typePoI;
+    }
+
+    public Location(double x, double y, String localidade, TypePoI typePoI) {
+        this.x = x;
+        this.y = y;
+        this.localidade = localidade;
+        this.typePoI = typePoI;
     }
 
     public Location(double x, double y, String localidade) {

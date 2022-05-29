@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+//pares de chave/valor
+
 public class Tag {
 
     public String key;
@@ -8,21 +10,10 @@ public class Tag {
 
     public ArrayList<PoI> poIArrayList = new ArrayList<>();
 
-    public int sensors;
 
-    public String streetName;
-
-    public String streetType;
-
-    public String TrafficVolume;
-
-    public Tag(String key, String value, int sensors, String streetName, String streetType, String trafficVolume) {
+    public Tag(String key, String value) {
         this.key = key;
         this.value = value;
-        this.sensors = sensors;
-        this.streetName = streetName;
-        this.streetType = streetType;
-        TrafficVolume = trafficVolume;
     }
 
     public Tag(String key, String value, ArrayList<PoI> poIArrayList) {
@@ -55,37 +46,11 @@ public class Tag {
         this.poIArrayList = poIArrayList;
     }
 
-    public int getSensors() {
-        return sensors;
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "key='" + key + '\'' +
+                ", value='" + value + '\'' +
+                '}';
     }
-
-    public void setSensors(int sensors) {
-        this.sensors = sensors;
-    }
-
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public String getStreetType() {
-        return streetType;
-    }
-
-    public void setStreetType(String streetType) {
-        this.streetType = streetType;
-    }
-
-    public String getTrafficVolume() {
-        return TrafficVolume;
-    }
-
-    public void setTrafficVolume(String trafficVolume) {
-        TrafficVolume = trafficVolume;
-    }
-
-
 }

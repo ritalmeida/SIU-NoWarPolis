@@ -1,16 +1,15 @@
-import edu.princeton.cs.algs4.RedBlackBST;
-
-
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.*;
+import java.util.logging.Logger;
 
 public class Admin implements Serializable {
 
 
   public HashMap<Integer, PoI> poIs;
   public HashMap<Integer, User> users;
-
   public String name;
+
+  public static final Logger LOGGER = Logger.getLogger(Admin.class.getName());
 
   public String getName() {
     return name;
@@ -21,12 +20,10 @@ public class Admin implements Serializable {
   }
 
   public Admin(String name) {
-    this.name = name;
-  }
 
-  public Admin(RedBlackBST<String, PoI> poIs, HashMap<Integer, PoI> poIs1, HashMap<Integer, User> users) {
-    this.poIs = poIs1;
-    this.users = users;
+    this.poIs = new HashMap<Integer, PoI>();
+    this.users = new HashMap<Integer, User>();
+    this.name = name;
   }
 
   public HashMap<Integer, PoI> getPoIs() {
@@ -45,72 +42,85 @@ public class Admin implements Serializable {
     this.users = users;
   }
 
-
-  /**********************************************************/
-
   /**
-   * Adicionar um utilizador ao Hash Map
-   * @param userBasic - o user a adicionar
+   * Adicionar um poi ao hashmap de pois
+   * @param poI - o pto a adicionar
    */
-  public void addUser(User userBasic) {
-
-    this.users.put(userBasic.getId(), userBasic);
-  }
-
-  /**
-   * Adicionar um PoI a Hash Map
-   * @param poI - o PoI a adicionar
-   */
-  public void addPoI(PoI poI) {
+  public void addPoIHash(PoI poI) {
 
     this.poIs.put(poI.getId(), poI);
+    System.out.println("Point added!");
   }
 
   /**
-   * Imprimir o hash map de PoIs
+   * Imprimir a hash map de pois
    */
-  public void printPoIs() {
+  public void printPoIHashMap() {
 
+    System.out.println("Pois: ");
     System.out.println(this.poIs.toString());
   }
 
   /**
-   * Imprimir os users
-   */
-  public void printUsers() {
-
-    System.out.println(this.users.toString());
-  }
-
-  /**
-   * Remover um user da hash map de users
-   * @param userBasic - o user a remover
-   */
-  public void removeUser(User userBasic) {
-
-    if (this.users.containsValue(userBasic)) {
-
-      this.users.remove(userBasic.getId(), userBasic);
-      userBasic.remove();
-    }
-  }
-
-  /**
-   * Remover um PoI da Hash Map de PoIs
-   * @param poI - o pto de interesse a remover
+   * Remover um poi da hash
+   * @param poI - poi a remover
    */
   public void removePoI(PoI poI) {
 
     if (this.poIs.containsValue(poI)) {
 
       this.poIs.remove(poI.getId(), poI);
-      poI.remove();
+      poI.removePoI();
     }
   }
 
+  /**
+   * Adicionar um user ao hashmap de users
+   * @param user - o user a adicionar
+   */
+  public void addUserHash(User user) {
+
+    this.users.put(user.getId(), user);
+    System.out.println("User added!");
+  }
+
+  /**
+   * Imprimir hash dos users
+   */
+  public void printUserHaspMap() {
+
+    System.out.println("Users: ");
+    System.out.println(this.users.toString());
+  }
+
+  /**
+   * Remover um user
+   * @param user - user a remover
+   */
+  public void removeUser(User user) {
+
+    if (this.users.containsValue(user)) {
+
+      this.users.remove(user.getId(), user);
+      user.removeUser();
+    }
+  }
+
+  /**
+   * Esta função vai gerar um snapshot do sistema dos PoIs naquele momento
+   */
   public void now() {
 
-    //FAZER!!
+    Date date1 = new Date(01, 01, 1900);
+    Date date2 = new Date(31,12,3000);
+
+    LOGGER.info("Status now: ");
+
+    for (Map.Entry<Integer, PoI> poI : this.poIs.entrySet()) {
+
+      System.out.println(poI.getValue().userVisitedInTime(date1, date2).toString());
+    }
   }
+
 
 }

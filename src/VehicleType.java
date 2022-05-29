@@ -6,6 +6,4 @@ enum VehicleType {
 
   Motorcycle;
 
-    public ChargingStation chargingStation;
-
 }
