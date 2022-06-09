@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.Out;
+
 import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
@@ -49,7 +51,7 @@ public class Admin implements Serializable {
   public void addPoIHash(PoI poI) {
 
     this.poIs.put(poI.getId(), poI);
-    System.out.println("Point added!");
+    //System.out.println("Point added!");
   }
 
   /**
@@ -81,7 +83,7 @@ public class Admin implements Serializable {
   public void addUserHash(User user) {
 
     this.users.put(user.getId(), user);
-    System.out.println("User added!");
+    //System.out.println("User added!");
   }
 
   /**
@@ -115,6 +117,7 @@ public class Admin implements Serializable {
     Date date2 = new Date(31,12,3000);
 
     LOGGER.info("Status now: ");
+    this.printPoIHashMap();
 
     for (Map.Entry<Integer, PoI> poI : this.poIs.entrySet()) {
 
@@ -122,5 +125,38 @@ public class Admin implements Serializable {
     }
   }
 
+  public HashMap<Integer, PoI> poiNotVisitedInTime(HashMap<Integer, PoI> pois, Date d1, Date d2) {
+
+    HashMap<Integer, PoI> poIHashMap = new HashMap<>();
+    poIHashMap.putAll(pois);
+
+    ArrayList<PoI> poIArrayList = new ArrayList<>();
+
+    for (PoI poI : poIArrayList) {
+
+      poIHashMap.remove(poI.getId(), poI);
+    }
+    return poIHashMap;
+  }
+
+  /**
+   * Write to file all users and poIs
+   */
+  public void userPoitxt() {
+
+    Out out=new Out("/Users/Ritaa/Documents/FACULDADE/SIU-NoWarPolis/data/output_userPoi");
+    out.println("Admin: " + this.name);
+    out.println("");
+    out.println("Number of PoIs: " + this.poIs.size());
+    for (Map.Entry<Integer, PoI> poi : this.poIs.entrySet()){
+      out.println(poi.getValue().getId()+","+poi.getValue().getTypePoI()+","+poi.getValue().getLocation().getX()+","+poi.getValue().getInfo());
+    }
+    out.println("");
+    out.println("Number of users: " + this.users.size());
+    for (Map.Entry<Integer,User> user:this.users.entrySet()){
+      out.println(user.getValue().getId() + ", " + user.getValue().getName());
+    }
+
+  }
 
 }

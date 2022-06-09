@@ -53,11 +53,9 @@ public class User implements Serializable {
 
   @Override
   public String toString() {
-    return "UserBasic{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", poIs=" + poIs +
-            '}';
+    return "User: " +
+            "id: " + id +
+            ", name: '" + name + '\'';
   }
 
   /**
@@ -123,6 +121,27 @@ public class User implements Serializable {
   }
 
   /**
+   * Os PoIs não visitados por um user entre 2 datas
+   * @param pois - todos os pois da rede
+   * @param d1 - data 1
+   * @param d2 - data 2
+   * @return os pois nao visitados
+   */
+  public HashMap<Integer, PoI> poiNotVisitedInTime(HashMap<Integer, PoI> pois, Date d1, Date d2) {
+
+    HashMap<Integer, PoI> poIHashMap = new HashMap<>();
+    poIHashMap.putAll(pois);
+
+    ArrayList<PoI> poIArrayList = this.poiVisitedinTime(d1, d2);
+
+    for (PoI poI : poIArrayList) {
+
+      poIHashMap.remove(poI.getId(), poI);
+    }
+    return poIHashMap;
+  }
+
+  /**
    * Eliminar um user
    */
   public void removeUser() {
@@ -169,13 +188,13 @@ public class User implements Serializable {
 
     int size;
 
-    for (Map.Entry<Integer, User> set:users.entrySet()){
+    for (Map.Entry<Integer, User> set : users.entrySet()){
 
       size = set.getValue().poiVisitedinTime(date1, date2).size();
       top5.put(set.getValue(), size);
     }
 
-    List<Map.Entry<User, Integer>> list = new LinkedList<>(top5.entrySet());    //lista para os elementos do HashMap
+    List<Map.Entry<User, Integer>> list = new LinkedList<>(top5.entrySet());
 
     Collections.sort(list, new Comparator<Map.Entry<User, Integer>>() {
       @Override
@@ -185,7 +204,7 @@ public class User implements Serializable {
       }
     });
 
-    for (Map.Entry<User, Integer> u : list) {       //passar os dados da lista para o hashmap
+    for (Map.Entry<User, Integer> u : list) {
 
       end.add(u.getKey());
     }

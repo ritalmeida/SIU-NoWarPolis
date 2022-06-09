@@ -65,9 +65,9 @@ public class Location implements Serializable {
         return "Location{" +
                 "x=" + x +
                 ", y=" + y +
-                ", localidade='" + localidade + '\'' +
                 '}';
     }
+    //                ", localidade='" + localidade + '\'' +
 
     //
     //

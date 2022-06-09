@@ -1,10 +1,10 @@
 //Uma rede, para gerir os nós
 
-import edu.princeton.cs.algs4.DijkstraSP;
-import edu.princeton.cs.algs4.DirectedEdge;
-import edu.princeton.cs.algs4.EdgeWeightedDigraph;
-import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Network {
@@ -71,6 +71,7 @@ public class Network {
 
     /**
      * Criar um sub grafo
+     *
      * @param subGraph - subgrafo a ser criado
      */
     public void createSubGraph(SubGraph subGraph) {
@@ -92,6 +93,7 @@ public class Network {
 
     /**
      * Adicionar um novo no
+     *
      * @param node - no a ser adicionado a nossa lista
      */
     public void addNode(Node node) {
@@ -103,11 +105,12 @@ public class Network {
         }
 
         this.nodes.add(node);
-        System.out.println("Node added!");
+        //System.out.println("Node added!");
     }
 
     /**
      * Criar uma aresta
+     *
      * @param way - aresta a ser criada
      */
     public void createEdge(Way way) {
@@ -117,12 +120,13 @@ public class Network {
             this.digraph.addEdge(way);
             this.ways.add(way);
 
-            System.out.println("New edge added! From " + way.getN1() + " -> " + way.getN2() + " and weight: " + way.weight());
+            System.out.println("New edge added: " + way.getN1() + " -> " + way.getN2() + " and weight: " + way.weight());
         }
     }
 
     /**
      * funçao generica
+     *
      * @param g
      * @return
      */
@@ -147,26 +151,43 @@ public class Network {
 
     /**
      * funçao generica
-     * @param source
-     * @param destination
-     * @param g
-     * @param type
+     *
+     * @param source      - no de origem
+     * @param destination - no de destino
+     * @param g           - grafo onde estao os nós
+     * @param type        - o tipo de custo
      */
-    public void shortestPathBetween(int source, int destination ,EdgeWeightedDigraph g, Cost type) {
+    public void shortestPathBetween(Node source, Node destination, EdgeWeightedDigraph g, Cost type) {
 
         cost = type;
-        DijkstraSP dijkstraSP = new DijkstraSP(g, source );
-        System.out.println("printing dijkstra ...");
-        if (dijkstraSP.hasPathTo(destination )) {
-            StdOut.printf("%d to %d (%.2f)  ", source, destination, dijkstraSP.distTo(destination ));
-            for (DirectedEdge e : dijkstraSP.pathTo(destination )) {
+        DijkstraSP dijkstraSP = new DijkstraSP(g, source.getId());
+
+        if (dijkstraSP.hasPathTo(destination.getId())) {
+            StdOut.printf("Cost between Node id %d to Node id %d is -> %.2f \n", source.getId(), destination.getId(), dijkstraSP.distTo(destination.getId()));
+            for (DirectedEdge e : dijkstraSP.pathTo(destination.getId())) {
                 StdOut.print((e.toString()));
             }
             StdOut.println();
         } else {
-            StdOut.printf("%d to %d         no path\n", source , destination );
+            StdOut.printf("%d to %d         no path\n", source.getId(), destination.getId());
         }
     }
+
+
+    public void saveNodesToBin() {
+
+        try {
+            File fp = new File("/Users/Ritaa/Documents/FACULDADE/SIU-NoWarPolis/data/NodesBin.bin");
+            FileOutputStream fos = new FileOutputStream(fp);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(this.nodes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 
 

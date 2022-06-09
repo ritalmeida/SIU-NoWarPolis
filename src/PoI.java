@@ -23,6 +23,16 @@ public class PoI implements Serializable {
 
   public TypePoI typePoI;
 
+  @Override
+  public String toString() {
+    return "PoI{" +
+            "id: " + id +
+            ", location: " + location +
+            ", typePoI: " + typePoI +
+            ", info: '" + info + '\'' +
+            '}';
+  }
+
   public PoI(int id, String localidade, String info, RedBlackBST<Date, User> users, Location location, TypePoI typePoI) {
 
     this.id = id;
@@ -97,12 +107,6 @@ public class PoI implements Serializable {
     this.users = users;
   }
 
-  public PoI(int id, String info, Location location, RedBlackBST<Date, User> users) {
-    this.id = id;
-    this.location = location;
-    this.info = info;
-    this.users = users;
-  }
 
   public PoI(int id, TypePoI typePoI, String info, Location location) {
 
@@ -110,6 +114,7 @@ public class PoI implements Serializable {
     this.typePoI = typePoI;
     this.info = info;
     this.location = location;
+    users = new RedBlackBST<>();
   }
 
   /**
@@ -226,7 +231,7 @@ public class PoI implements Serializable {
 
     HashMap<PoI,Integer> top5 = new HashMap<>();
     ArrayList<PoI> end = new ArrayList<>();
-    ArrayList<PoI> top5PoIs = new ArrayList<>();    //array final
+    ArrayList<PoI> top5PoIs = new ArrayList<>();
 
     int size;
 
